@@ -4,9 +4,11 @@ import 'package:collection/collection.dart';
 enum MimeType {
   applicationPdf('application', 'pdf'),
   imageJpeg('image', 'jpeg'),
-  imageJpg('image', 'jpg'),
   imageSvgXml('image', 'svg+xml'),
-  imagePng('image', 'png');
+  imageWebp('webp', 'webp'),
+  imageGif('image', 'gif'),
+  imagePng('image', 'png'),
+  ;
 
   final String type;
   final String subType;

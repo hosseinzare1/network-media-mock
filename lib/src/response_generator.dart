@@ -17,12 +17,10 @@ class ResponseGenerator {
 
   Future<MockHttpClientResponse?> generateResponse(String url) async {
     // Try to recognize type from url last part
-    MimeType? type = MimeType.fromValueOrNull(url.split('.').last);
+    MimeType? type = _getMimeTypeFromExtension(url.split('.').last);
 
     // Try to recognize type with provided regexes if type is not recognized from url last part
-    if (type != null) {
-      type = options.urlToTypeMappers.firstWhereOrNull((e) => e.urlRegEx.hasMatch(url))?.mimeType;
-    }
+    type ??= options.urlToTypeMappers.firstWhereOrNull((e) => e.urlRegEx.hasMatch(url))?.mimeType;
 
     if (type != null) {
       List<String> assetPaths = [];
@@ -60,11 +58,24 @@ class ResponseGenerator {
     return null;
   }
 
-  static List<MimeTypeToAssetMapping> get _defaultTypeToAssetMappers => [
-        MimeTypeToAssetMapping(MimeType.applicationPdf, ""),
-        MimeTypeToAssetMapping(MimeType.imageJpeg, ""),
-        MimeTypeToAssetMapping(MimeType.imageJpg, ""),
-        MimeTypeToAssetMapping(MimeType.imagePng, ""),
-        MimeTypeToAssetMapping(MimeType.imageSvgXml, ""),
+  List<MimeTypeToAssetMapping> get _defaultTypeToAssetMappers => [
+        MimeTypeToAssetMapping(MimeType.applicationPdf, "assets/mock_pdf.pdf"),
+        MimeTypeToAssetMapping(MimeType.imageJpeg, "assets/mock_jpg.jpg"),
+        MimeTypeToAssetMapping(MimeType.imagePng, "assets/mock_png.png"),
+        MimeTypeToAssetMapping(MimeType.imageSvgXml, "assets/mock_svg.svg"),
+        MimeTypeToAssetMapping(MimeType.imageGif, "assets/mock_gif.gif"),
       ];
+
+  MimeType? _getMimeTypeFromExtension(String fileExtension) {
+    MimeType? mimeType = switch (fileExtension) {
+      'pdf' => MimeType.applicationPdf,
+      'jpg' || 'jpeg' => MimeType.imageJpeg,
+      'png' => MimeType.imagePng,
+      'svg' => MimeType.imageSvgXml,
+      'webp' => MimeType.imageWebp,
+      'gif' => MimeType.imageGif,
+      _ => null,
+    };
+    return mimeType;
+  }
 }
