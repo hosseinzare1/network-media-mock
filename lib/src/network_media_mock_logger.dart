@@ -1,16 +1,18 @@
 import 'dart:nativewrappers/_internal/vm/lib/developer.dart';
 
-import 'package:flutter/foundation.dart';
-
 class NetworkMediaMockLogger {
-  static void printSuccess(String message) {
-    if (kDebugMode) {
+  final bool isLogEnabled;
+
+  const NetworkMediaMockLogger({required this.isLogEnabled});
+
+  void printSuccess(String message) {
+    if (isLogEnabled) {
       log(message, name: "NetworkMediaMock Success");
     }
   }
 
-  static void printError(String message) {
-    if (kDebugMode) {
+  void printError(String message) {
+    if (isLogEnabled) {
       log(message, name: "NetworkMediaMock Error");
     }
   }

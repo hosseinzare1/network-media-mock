@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:network_media_mock/src/logger.dart';
+import 'package:network_media_mock/src/network_media_mock_logger.dart';
 import 'package:network_media_mock/src/options.dart';
 import 'package:network_media_mock/src/response_generator.dart';
 
@@ -10,16 +10,18 @@ import 'mock_http_client_request.dart';
 /// mock responses where applicable. If no mock response is available,
 /// the request is forwarded to the main [HttpClient].
 class MockHttpClient implements HttpClient {
-  final HttpClient mainClient;
-  final NetworkMediaMockOptions options;
+  final HttpClient _mainClient;
+  final NetworkMediaMockOptions _options;
+  final NetworkMediaMockLogger _logger;
 
-  MockHttpClient(this.mainClient, this.options)
-      : autoUncompress = mainClient.autoUncompress,
-        idleTimeout = mainClient.idleTimeout,
-        connectionTimeout = mainClient.connectionTimeout,
-        maxConnectionsPerHost = mainClient.maxConnectionsPerHost,
-        userAgent = mainClient.userAgent,
-        _responseGenerator = ResponseGenerator(options: options);
+  MockHttpClient(this._mainClient, this._options)
+      : autoUncompress = _mainClient.autoUncompress,
+        idleTimeout = _mainClient.idleTimeout,
+        connectionTimeout = _mainClient.connectionTimeout,
+        maxConnectionsPerHost = _mainClient.maxConnectionsPerHost,
+        userAgent = _mainClient.userAgent,
+        _responseGenerator = ResponseGenerator(options: _options),
+        _logger = NetworkMediaMockLogger(isLogEnabled: _options.isLogEnabled);
 
   final ResponseGenerator _responseGenerator;
 
@@ -28,16 +30,14 @@ class MockHttpClient implements HttpClient {
     var response = await _responseGenerator.generateResponse(url.toString());
 
     if (response != null) {
-
-      NetworkMediaMockLogger.printSuccess("Media successfully mocked for: ${url.toString()}");
-      await Future.delayed(options.responseDelay);
+      _logger.printSuccess("Media successfully mocked for: ${url.toString()}");
+      await Future.delayed(_options.responseDelay);
 
       var request = MockHttpClientRequest(response);
 
       return request;
     } else {
-
-      return mainClient.openUrl(method, url);
+      return _mainClient.openUrl(method, url);
     }
   }
 
@@ -58,111 +58,111 @@ class MockHttpClient implements HttpClient {
 
   @override
   void addCredentials(Uri url, String realm, HttpClientCredentials credentials) {
-    mainClient.addCredentials(url, realm, credentials);
+    _mainClient.addCredentials(url, realm, credentials);
   }
 
   @override
   void addProxyCredentials(String host, int port, String realm, HttpClientCredentials credentials) {
-    mainClient.addProxyCredentials(host, port, realm, credentials);
+    _mainClient.addProxyCredentials(host, port, realm, credentials);
   }
 
   @override
   set authenticate(Future<bool> Function(Uri url, String scheme, String? realm)? f) {
-    mainClient.authenticate = f;
+    _mainClient.authenticate = f;
   }
 
   @override
   set authenticateProxy(Future<bool> Function(String host, int port, String scheme, String? realm)? f) {
-    mainClient.idleTimeout = idleTimeout;
+    _mainClient.idleTimeout = idleTimeout;
   }
 
   @override
   set badCertificateCallback(bool Function(X509Certificate cert, String host, int port)? callback) {
-    mainClient.badCertificateCallback = callback;
+    _mainClient.badCertificateCallback = callback;
   }
 
   @override
   void close({bool force = false}) {
-    mainClient.close(force: force);
+    _mainClient.close(force: force);
   }
 
   @override
   set connectionFactory(Future<ConnectionTask<Socket>> Function(Uri url, String? proxyHost, int? proxyPort)? f) {
-    mainClient.connectionFactory = f;
+    _mainClient.connectionFactory = f;
   }
 
   @override
   Future<HttpClientRequest> delete(String host, int port, String path) {
-    return mainClient.delete(host, port, path);
+    return _mainClient.delete(host, port, path);
   }
 
   @override
   Future<HttpClientRequest> deleteUrl(Uri url) {
-    return mainClient.deleteUrl(url);
+    return _mainClient.deleteUrl(url);
   }
 
   @override
   set findProxy(String Function(Uri url)? f) {
-    mainClient.findProxy = f;
+    _mainClient.findProxy = f;
   }
 
   @override
   Future<HttpClientRequest> get(String host, int port, String path) {
-    return mainClient.get(host, port, path);
+    return _mainClient.get(host, port, path);
   }
 
   @override
   Future<HttpClientRequest> getUrl(Uri url) {
-    return mainClient.getUrl(url);
+    return _mainClient.getUrl(url);
   }
 
   @override
   Future<HttpClientRequest> head(String host, int port, String path) {
-    return mainClient.head(host, port, path);
+    return _mainClient.head(host, port, path);
   }
 
   @override
   Future<HttpClientRequest> headUrl(Uri url) {
-    return mainClient.headUrl(url);
+    return _mainClient.headUrl(url);
   }
 
   @override
   set keyLog(Function(String line)? callback) {
-    mainClient.keyLog = callback;
+    _mainClient.keyLog = callback;
   }
 
   @override
   Future<HttpClientRequest> open(String method, String host, int port, String path) {
-    return mainClient.open(method, host, port, path);
+    return _mainClient.open(method, host, port, path);
   }
 
   @override
   Future<HttpClientRequest> patch(String host, int port, String path) {
-    return mainClient.patch(host, port, path);
+    return _mainClient.patch(host, port, path);
   }
 
   @override
   Future<HttpClientRequest> patchUrl(Uri url) {
-    return mainClient.patchUrl(url);
+    return _mainClient.patchUrl(url);
   }
 
   @override
   Future<HttpClientRequest> post(String host, int port, String path) {
-    return mainClient.post(host, port, path);
+    return _mainClient.post(host, port, path);
   }
 
   @override
   Future<HttpClientRequest> postUrl(Uri url) {
-    return mainClient.postUrl(url);
+    return _mainClient.postUrl(url);
   }
 
   @override
   Future<HttpClientRequest> put(String host, int port, String path) {
-    return mainClient.put(host, port, path);
+    return _mainClient.put(host, port, path);
   }
 
   @override
   Future<HttpClientRequest> putUrl(Uri url) {
-    return mainClient.putUrl(url);
+    return _mainClient.putUrl(url);
   }
 }

@@ -13,8 +13,7 @@ class MockHttpOverrides extends HttpOverrides {
 
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-
-    var mainClient = super.createHttpClient(context);
+    HttpClient mainClient = super.createHttpClient(context);
     return MockHttpClient(mainClient, options);
   }
 }

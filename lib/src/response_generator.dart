@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:network_media_mock/src/logger.dart';
+import 'package:network_media_mock/src/network_media_mock_logger.dart';
 import 'package:network_media_mock/src/mime_type_enum.dart';
 import 'package:network_media_mock/src/mocks/mock_http_client_response.dart';
 import 'package:network_media_mock/src/options.dart';
@@ -8,8 +8,12 @@ import 'package:collection/collection.dart';
 
 class ResponseGenerator {
   final NetworkMediaMockOptions options;
+  final NetworkMediaMockLogger logger;
 
-  ResponseGenerator({required this.options});
+  ResponseGenerator({required this.options})
+      : logger = NetworkMediaMockLogger(
+          isLogEnabled: options.isLogEnabled,
+        );
 
   Future<MockHttpClientResponse?> generateResponse(String url) async {
     // Try to recognize type from url last part
@@ -37,7 +41,7 @@ class ResponseGenerator {
       var fileAssetPath = assetPaths.firstOrNull;
 
       if (fileAssetPath == null) {
-        NetworkMediaMockLogger.printError("Url type recognized as '$type' but no asset found for url: $url");
+        logger.printError("Url type recognized as '$type' but no asset found for url: $url");
         return null;
       }
 
@@ -51,7 +55,7 @@ class ResponseGenerator {
       return response;
     }
 
-    NetworkMediaMockLogger.printError("No type recognized for url: $url");
+    logger.printError("No type recognized for url: $url");
 
     return null;
   }
