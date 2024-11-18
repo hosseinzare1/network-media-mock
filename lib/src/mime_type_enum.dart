@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 
-/// Add more mime type whenever application supports new mimes.
 enum MimeType {
   applicationPdf('application', 'pdf'),
   imageJpeg('image', 'jpeg'),
