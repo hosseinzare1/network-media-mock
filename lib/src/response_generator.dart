@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:network_media_mock/src/network_media_mock_logger.dart';
-import 'package:network_media_mock/src/mime_type_enum.dart';
+import 'package:network_media_mock/src/mock_mime_type_enum.dart';
 import 'package:network_media_mock/src/mocks/mock_http_client_response.dart';
 import 'package:network_media_mock/src/network_media_mock_options.dart';
 import 'package:network_media_mock/src/mime_type_to_asset_mapping.dart';

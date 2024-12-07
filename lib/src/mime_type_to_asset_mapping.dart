@@ -1,4 +1,4 @@
-import 'package:network_media_mock/src/mime_type_enum.dart';
+import 'package:network_media_mock/src/mock_mime_type_enum.dart';
 
 /// Represents a mapping between a MIME type and an asset path.
 ///
