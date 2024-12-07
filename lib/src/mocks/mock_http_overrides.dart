@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:network_media_mock/src/options.dart';
+import 'package:network_media_mock/src/network_media_mock_options.dart';
 
 import 'mock_http_client.dart';
 

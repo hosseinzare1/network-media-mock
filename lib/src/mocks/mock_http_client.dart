@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:network_media_mock/src/network_media_mock_logger.dart';
-import 'package:network_media_mock/src/options.dart';
+import 'package:network_media_mock/src/network_media_mock_options.dart';
 import 'package:network_media_mock/src/response_generator.dart';
 
 import 'mock_http_client_request.dart';
