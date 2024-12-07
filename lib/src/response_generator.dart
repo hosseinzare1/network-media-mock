@@ -76,11 +76,12 @@ class ResponseGenerator {
 
   /// Default mappings for common MIME types and their corresponding mock assets.
   List<MimeTypeToAssetMapping> get _defaultTypeToAssetMappers => [
-        MimeTypeToAssetMapping(MockMimeType.applicationPdf, "assets/mock_pdf.pdf"),
-        MimeTypeToAssetMapping(MockMimeType.imageJpeg, "assets/mock_jpg.jpg"),
-        MimeTypeToAssetMapping(MockMimeType.imagePng, "assets/mock_png.png"),
-        MimeTypeToAssetMapping(MockMimeType.imageSvgXml, "assets/mock_svg.svg"),
-        MimeTypeToAssetMapping(MockMimeType.imageGif, "assets/mock_gif.gif"),
+        MimeTypeToAssetMapping(MockMimeType.applicationPdf, "packages/network_media_mock/assets/mock_pdf.pdf"),
+        MimeTypeToAssetMapping(MockMimeType.imageJpeg, "packages/network_media_mock/assets/mock_jpg.jpg"),
+        MimeTypeToAssetMapping(MockMimeType.imageJpg, "packages/network_media_mock/assets/mock_jpg.jpg"),
+        MimeTypeToAssetMapping(MockMimeType.imagePng, "packages/network_media_mock/assets/mock_png.png"),
+        MimeTypeToAssetMapping(MockMimeType.imageSvgXml, "packages/network_media_mock/assets/mock_svg.svg"),
+        MimeTypeToAssetMapping(MockMimeType.imageGif, "packages/network_media_mock/assets/mock_gif.gif"),
       ];
 
   /// Determines the MIME type based on the file extension.

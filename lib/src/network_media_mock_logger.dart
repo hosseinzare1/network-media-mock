@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'package:flutter/foundation.dart';
 
 /// A utility class for logging messages related to network media mocking.
 ///
@@ -11,13 +11,13 @@ class NetworkMediaMockLogger {
 
   void printSuccess(String message) {
     if (isLogEnabled) {
-      log(message, name: "NetworkMediaMock Success");
+      if (kDebugMode) print(message);
     }
   }
 
   void printError(String message) {
     if (isLogEnabled) {
-      log(message, name: "NetworkMediaMock Error");
+      if (kDebugMode) print(message);
     }
   }
 }
