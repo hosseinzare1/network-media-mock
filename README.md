@@ -2,7 +2,6 @@
 
 **Network Media Mock** is a powerful Dart package for mocking HTTP requests for media files in Flutter applications. It enables seamless simulation of network media responses by intercepting HTTP requests and serving local asset files instead. This is ideal for **testing**, **prototyping**, or **demonstrating** applications without relying on live servers.
 
----
 
 ## **Supported Widgets**
 
@@ -12,7 +11,6 @@ This tool is designed to work seamlessly with the following widgets:
 - `CachedNetworkImage`
 - `SvgPicture.network`
 
----
 
 ## **Features**
 
@@ -22,7 +20,6 @@ This tool is designed to work seamlessly with the following widgets:
 - **Type Recognition**: Automatically detect MIME types from file extensions or URL patterns.
 - **Flexible Configuration**: Customize options such as response delays, logging, and default mappings.
 
----
 
 ## **Getting Started**
 
