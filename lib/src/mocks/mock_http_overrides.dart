@@ -4,6 +4,22 @@ import 'package:network_media_mock/src/options.dart';
 
 import 'mock_http_client.dart';
 
+/// Overrides the default `HttpClient` implementation with `MockHttpClient`
+/// to enable network media mocking during testing or development.
+///
+/// This class ensures all HTTP requests are routed through the `MockHttpClient`,
+/// which uses predefined options and mappings to simulate network responses.
+///
+/// ### Parameters:
+/// - `options`: An instance of `NetworkMediaMockOptions` to configure the mock behavior.
+///              Defaults to `NetworkMediaMockOptions.defaultOptions`.
+///
+/// ### Usage:
+/// Typically used to globally override HTTP requests during application runtime
+/// by calling:
+/// ```dart
+/// HttpOverrides.global = MockHttpOverrides(options: customOptions);
+/// ```
 class MockHttpOverrides extends HttpOverrides {
   MockHttpOverrides({
     this.options = NetworkMediaMockOptions.defaultOptions,

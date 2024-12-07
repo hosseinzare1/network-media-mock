@@ -6,9 +6,23 @@ import 'package:network_media_mock/src/response_generator.dart';
 
 import 'mock_http_client_request.dart';
 
-/// A mock implementation of [HttpClient] that intercepts requests and serves
-/// mock responses where applicable. If no mock response is available,
-/// the request is forwarded to the main [HttpClient].
+/// A custom `HttpClient` implementation that simulates HTTP responses
+/// based on predefined rules and mappings.
+///
+/// This class is internal to the package and not intended for public use. It extends
+/// the base `HttpClient` and overrides specific methods to generate mocked responses
+/// using the `ResponseGenerator`. If no mock matches the request, it delegates the call
+/// to the main client.
+///
+/// ### Key Features:
+/// - Routes requests to mocked responses using `ResponseGenerator`.
+/// - Logs successes or failures when attempting to match mock data.
+/// - Fallbacks to the original HTTP request if no mock is found.
+///
+/// ### Parameters:
+/// - `_mainClient`: The original `HttpClient` instance to handle unmocked requests.
+/// - `_options`: Configuration options defining mock behavior.
+/// - `_logger`: Handles logging for debugging purposes.
 class MockHttpClient implements HttpClient {
   final HttpClient _mainClient;
   final NetworkMediaMockOptions _options;

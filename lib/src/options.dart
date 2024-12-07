@@ -76,7 +76,8 @@ class NetworkMediaMockOptions {
   /// );
   /// ```
   /// In this example:
-  /// - Any URL matching the pattern `https://example.com/.*` (with no file extension) will return the media with MIME type `image/jpeg` or `audio/mp3`, depending on the mapping.
+  /// - Any URL matching the pattern `https://example.com/api/media.*` (with no file extension) will return the media with MIME type `image/jpeg`
+  /// - Any URL matching the pattern `https://example.com/api/audio.*` (with no file extension) will return the media with MIME type `audio/mp3`
   final List<UrlToTypeMapping> urlToTypeMappers;
 
   /// A default instance of [NetworkMediaMockOptions] with predefined values.

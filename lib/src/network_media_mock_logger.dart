@@ -1,5 +1,9 @@
-import 'dart:nativewrappers/_internal/vm/lib/developer.dart';
+import 'dart:developer';
 
+/// A utility class for logging messages related to network media mocking.
+///
+/// This class provides methods to log success and error messages during
+/// the mocking process. Logging is controlled by the [isLogEnabled] flag.
 class NetworkMediaMockLogger {
   final bool isLogEnabled;
 
