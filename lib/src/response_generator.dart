@@ -4,7 +4,6 @@ import 'package:network_media_mock/src/mime_type_enum.dart';
 import 'package:network_media_mock/src/mocks/mock_http_client_response.dart';
 import 'package:network_media_mock/src/options.dart';
 import 'package:network_media_mock/src/mime_type_to_asset_mapping.dart';
-import 'package:collection/collection.dart';
 
 /// Responsible for generating mock HTTP responses for media requests.
 ///
@@ -44,7 +43,7 @@ class ResponseGenerator {
   Future<MockHttpClientResponse?> generateResponse(String url) async {
     MimeType? type = _getMimeTypeFromExtension(url.split('.').last);
 
-    type ??= options.urlToTypeMappers.firstWhereOrNull((e) => e.urlRegEx.hasMatch(url))?.mimeType;
+    type ??= options.urlToTypeMappers.where((e) => e.urlRegEx.hasMatch(url)).firstOrNull?.mimeType;
 
     if (type != null) {
       List<String> assetPaths =
