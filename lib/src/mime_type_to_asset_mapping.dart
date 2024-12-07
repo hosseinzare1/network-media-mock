@@ -9,15 +9,15 @@ import 'package:network_media_mock/src/mime_type_enum.dart';
 /// Example usage:
 /// ```dart
 /// final mapping = MimeTypeToAssetMapping(
-///   MimeType.imageJpeg,
+///   MockMimeType.imageJpeg,
 ///   'assets/mock_image.jpg',
 /// );
-/// print(mapping.mimeType); // Output: MimeType.imageJpeg
+/// print(mapping.mimeType); // Output: MockMimeType.imageJpeg
 /// print(mapping.assetPath); // Output: assets/mock_image.jpg
 /// ```
 class MimeTypeToAssetMapping {
   /// The MIME type being mapped.
-  final MimeType mimeType;
+  final MockMimeType mimeType;
 
   /// The path to the asset associated with this MIME type.
   final String assetPath;

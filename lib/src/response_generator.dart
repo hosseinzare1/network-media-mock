@@ -41,7 +41,7 @@ class ResponseGenerator {
   ///
   /// If no type or asset is found, logs an error and returns `null`.
   Future<MockHttpClientResponse?> generateResponse(String url) async {
-    MimeType? type = _getMimeTypeFromExtension(url.split('.').last);
+    MockMimeType? type = _getMimeTypeFromExtension(url.split('.').last);
 
     type ??= options.urlToTypeMappers.where((e) => e.urlRegEx.hasMatch(url)).firstOrNull?.mimeType;
 
@@ -76,22 +76,22 @@ class ResponseGenerator {
 
   /// Default mappings for common MIME types and their corresponding mock assets.
   List<MimeTypeToAssetMapping> get _defaultTypeToAssetMappers => [
-        MimeTypeToAssetMapping(MimeType.applicationPdf, "assets/mock_pdf.pdf"),
-        MimeTypeToAssetMapping(MimeType.imageJpeg, "assets/mock_jpg.jpg"),
-        MimeTypeToAssetMapping(MimeType.imagePng, "assets/mock_png.png"),
-        MimeTypeToAssetMapping(MimeType.imageSvgXml, "assets/mock_svg.svg"),
-        MimeTypeToAssetMapping(MimeType.imageGif, "assets/mock_gif.gif"),
+        MimeTypeToAssetMapping(MockMimeType.applicationPdf, "assets/mock_pdf.pdf"),
+        MimeTypeToAssetMapping(MockMimeType.imageJpeg, "assets/mock_jpg.jpg"),
+        MimeTypeToAssetMapping(MockMimeType.imagePng, "assets/mock_png.png"),
+        MimeTypeToAssetMapping(MockMimeType.imageSvgXml, "assets/mock_svg.svg"),
+        MimeTypeToAssetMapping(MockMimeType.imageGif, "assets/mock_gif.gif"),
       ];
 
   /// Determines the MIME type based on the file extension.
-  MimeType? _getMimeTypeFromExtension(String fileExtension) {
+  MockMimeType? _getMimeTypeFromExtension(String fileExtension) {
     return switch (fileExtension) {
-      'pdf' => MimeType.applicationPdf,
-      'jpg' || 'jpeg' => MimeType.imageJpeg,
-      'png' => MimeType.imagePng,
-      'svg' => MimeType.imageSvgXml,
-      'webp' => MimeType.imageWebp,
-      'gif' => MimeType.imageGif,
+      'pdf' => MockMimeType.applicationPdf,
+      'jpg' || 'jpeg' => MockMimeType.imageJpeg,
+      'png' => MockMimeType.imagePng,
+      'svg' => MockMimeType.imageSvgXml,
+      'webp' => MockMimeType.imageWebp,
+      'gif' => MockMimeType.imageGif,
       _ => null,
     };
   }

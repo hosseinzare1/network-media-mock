@@ -48,9 +48,9 @@ class NetworkMediaMockOptions {
   /// ```dart
   /// final options = NetworkMediaMockOptions(
   ///   typeToAssetMappers: [
-  ///     MimeTypeToAssetMapping(mimeType: MimeType.imageJpeg, assetPath: 'assets/image1.jpg'),
-  ///     MimeTypeToAssetMapping(mimeType: MimeType.imageJpeg, assetPath: 'assets/image2.jpg'),
-  ///     MimeTypeToAssetMapping(mimeType: MimeType.imagePng, assetPath: 'assets/image3.png'),
+  ///     MimeTypeToAssetMapping(mimeType: MockMimeType.imageJpeg, assetPath: 'assets/image1.jpg'),
+  ///     MimeTypeToAssetMapping(mimeType: MockMimeType.imageJpeg, assetPath: 'assets/image2.jpg'),
+  ///     MimeTypeToAssetMapping(mimeType: MockMimeType.imagePng, assetPath: 'assets/image3.png'),
   ///   ],
   /// );
   /// ```
@@ -70,8 +70,8 @@ class NetworkMediaMockOptions {
   /// ```dart
   /// final options = NetworkMediaMockOptions(
   ///   urlToTypeMappers: [
-  ///     UrlToTypeMapping(urlRegEx: RegExp(r'https://example.com/api/media.*'), mimeType: MimeType.imageJpeg),
-  ///     UrlToTypeMapping(urlRegEx: RegExp(r'https://example.com/api/audio.*'), mimeType: MimeType.audioMp3),
+  ///     UrlToTypeMapping(urlRegEx: RegExp(r'https://example.com/api/media.*'), mimeType: MockMimeType.imageJpeg),
+  ///     UrlToTypeMapping(urlRegEx: RegExp(r'https://example.com/api/audio.*'), mimeType: MockMimeType.audioMp3),
   ///   ],
   /// );
   /// ```

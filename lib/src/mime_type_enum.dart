@@ -2,14 +2,14 @@
 ///
 /// This enum provides predefined MIME types for common file types such as
 /// images and application files, and includes utility methods for converting
-/// strings into `MimeType` values.
+/// strings into `MockMimeType` values.
 ///
 /// Example usage:
 /// ```dart
-/// final mimeType = MimeType.imageJpeg;
+/// final mimeType = MockMimeType.imageJpeg;
 /// print(mimeType.toString()); // Output: image/jpeg
 /// ```
-enum MimeType {
+enum MockMimeType {
   applicationPdf('application', 'pdf'),
   imageJpeg('image', 'jpeg'),
   imageSvgXml('image', 'svg+xml'),
@@ -20,7 +20,7 @@ enum MimeType {
   final String type;
   final String subType;
 
-  const MimeType(this.type, this.subType);
+  const MockMimeType(this.type, this.subType);
 
   /// Converts the MIME type to its string representation in the format `type/subType`.
   @override
