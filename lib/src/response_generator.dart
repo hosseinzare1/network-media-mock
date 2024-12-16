@@ -43,14 +43,22 @@ class ResponseGenerator {
   Future<MockHttpClientResponse?> generateResponse(String url) async {
     MockMimeType? type = _getMimeTypeFromExtension(url.split('.').last);
 
-    type ??= options.urlToTypeMappers.where((e) => e.urlRegEx.hasMatch(url)).firstOrNull?.mimeType;
+    type ??= options.urlToTypeMappers
+        .where((e) => e.urlRegEx.hasMatch(url))
+        .firstOrNull
+        ?.mimeType;
 
     if (type != null) {
-      List<String> assetPaths =
-          options.typeToAssetMappers.where((e) => e.mimeType == type).map((e) => e.assetPath).toList();
+      List<String> assetPaths = options.typeToAssetMappers
+          .where((e) => e.mimeType == type)
+          .map((e) => e.assetPath)
+          .toList();
 
       if (assetPaths.isEmpty) {
-        assetPaths = _defaultTypeToAssetMappers.where((e) => e.mimeType == type).map((e) => e.assetPath).toList();
+        assetPaths = _defaultTypeToAssetMappers
+            .where((e) => e.mimeType == type)
+            .map((e) => e.assetPath)
+            .toList();
       }
 
       assetPaths.shuffle();
@@ -58,11 +66,13 @@ class ResponseGenerator {
       var fileAssetPath = assetPaths.firstOrNull;
 
       if (fileAssetPath == null) {
-        logger.printError("Url type recognized as '$type' but no asset found for url: $url");
+        logger.printError(
+            "Url type recognized as '$type' but no asset found for url: $url");
         return null;
       }
 
-      final fileBytes = (await rootBundle.load(fileAssetPath)).buffer.asUint8List();
+      final fileBytes =
+          (await rootBundle.load(fileAssetPath)).buffer.asUint8List();
 
       return MockHttpClientResponse(
         fileBytes: fileBytes,
@@ -76,12 +86,18 @@ class ResponseGenerator {
 
   /// Default mappings for common MIME types and their corresponding mock assets.
   List<MimeTypeToAssetMapping> get _defaultTypeToAssetMappers => [
-        MimeTypeToAssetMapping(MockMimeType.applicationPdf, "packages/network_media_mock/assets/mock_pdf.pdf"),
-        MimeTypeToAssetMapping(MockMimeType.imageJpeg, "packages/network_media_mock/assets/mock_jpg.jpg"),
-        MimeTypeToAssetMapping(MockMimeType.imageJpg, "packages/network_media_mock/assets/mock_jpg.jpg"),
-        MimeTypeToAssetMapping(MockMimeType.imagePng, "packages/network_media_mock/assets/mock_png.png"),
-        MimeTypeToAssetMapping(MockMimeType.imageSvgXml, "packages/network_media_mock/assets/mock_svg.svg"),
-        MimeTypeToAssetMapping(MockMimeType.imageGif, "packages/network_media_mock/assets/mock_gif.gif"),
+        MimeTypeToAssetMapping(MockMimeType.applicationPdf,
+            "packages/network_media_mock/assets/mock_pdf.pdf"),
+        MimeTypeToAssetMapping(MockMimeType.imageJpeg,
+            "packages/network_media_mock/assets/mock_jpg.jpg"),
+        MimeTypeToAssetMapping(MockMimeType.imageJpg,
+            "packages/network_media_mock/assets/mock_jpg.jpg"),
+        MimeTypeToAssetMapping(MockMimeType.imagePng,
+            "packages/network_media_mock/assets/mock_png.png"),
+        MimeTypeToAssetMapping(MockMimeType.imageSvgXml,
+            "packages/network_media_mock/assets/mock_svg.svg"),
+        MimeTypeToAssetMapping(MockMimeType.imageGif,
+            "packages/network_media_mock/assets/mock_gif.gif"),
       ];
 
   /// Determines the MIME type based on the file extension.

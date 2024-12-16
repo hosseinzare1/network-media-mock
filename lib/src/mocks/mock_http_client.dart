@@ -71,27 +71,34 @@ class MockHttpClient implements HttpClient {
   String? userAgent;
 
   @override
-  void addCredentials(Uri url, String realm, HttpClientCredentials credentials) {
+  void addCredentials(
+      Uri url, String realm, HttpClientCredentials credentials) {
     _mainClient.addCredentials(url, realm, credentials);
   }
 
   @override
-  void addProxyCredentials(String host, int port, String realm, HttpClientCredentials credentials) {
+  void addProxyCredentials(
+      String host, int port, String realm, HttpClientCredentials credentials) {
     _mainClient.addProxyCredentials(host, port, realm, credentials);
   }
 
   @override
-  set authenticate(Future<bool> Function(Uri url, String scheme, String? realm)? f) {
+  set authenticate(
+      Future<bool> Function(Uri url, String scheme, String? realm)? f) {
     _mainClient.authenticate = f;
   }
 
   @override
-  set authenticateProxy(Future<bool> Function(String host, int port, String scheme, String? realm)? f) {
+  set authenticateProxy(
+      Future<bool> Function(
+              String host, int port, String scheme, String? realm)?
+          f) {
     _mainClient.idleTimeout = idleTimeout;
   }
 
   @override
-  set badCertificateCallback(bool Function(X509Certificate cert, String host, int port)? callback) {
+  set badCertificateCallback(
+      bool Function(X509Certificate cert, String host, int port)? callback) {
     _mainClient.badCertificateCallback = callback;
   }
 
@@ -101,7 +108,10 @@ class MockHttpClient implements HttpClient {
   }
 
   @override
-  set connectionFactory(Future<ConnectionTask<Socket>> Function(Uri url, String? proxyHost, int? proxyPort)? f) {
+  set connectionFactory(
+      Future<ConnectionTask<Socket>> Function(
+              Uri url, String? proxyHost, int? proxyPort)?
+          f) {
     _mainClient.connectionFactory = f;
   }
 
@@ -146,7 +156,8 @@ class MockHttpClient implements HttpClient {
   }
 
   @override
-  Future<HttpClientRequest> open(String method, String host, int port, String path) {
+  Future<HttpClientRequest> open(
+      String method, String host, int port, String path) {
     return _mainClient.open(method, host, port, path);
   }
 

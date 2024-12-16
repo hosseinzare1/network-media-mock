@@ -66,7 +66,8 @@ class MockHttpClientResponse extends Mock implements HttpClientResponse {
   /// [onError]: Callback invoked for errors in the stream.
   /// [test]: Optional filter to determine which errors should be handled.
   @override
-  Stream<List<int>> handleError(Function onError, {bool Function(dynamic error)? test}) {
+  Stream<List<int>> handleError(Function onError,
+      {bool Function(dynamic error)? test}) {
     return Stream.fromIterable([fileBytes]).handleError(onError, test: test);
   }
 

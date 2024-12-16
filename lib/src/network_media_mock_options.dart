@@ -85,7 +85,8 @@ class NetworkMediaMockOptions {
   /// This default configuration has `isLogEnabled` set to `true`, a `responseDelay`
   /// of 100 milliseconds, and empty lists for both `typeToAssetMappers` and
   /// `urlToTypeMappers`.
-  static const NetworkMediaMockOptions defaultOptions = NetworkMediaMockOptions();
+  static const NetworkMediaMockOptions defaultOptions =
+      NetworkMediaMockOptions();
 
   /// Creates an instance of [NetworkMediaMockOptions] with custom configurations.
   ///

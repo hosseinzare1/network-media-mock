@@ -23,7 +23,6 @@ enum MockMimeType {
 
   const MockMimeType(this.type, this.subType);
 
-
   /// Parses a full MIME type string (e.g., `image/jpeg`) into a `MimeType` instance.
   ///
   /// Returns `null` if the input string does not match any predefined MIME types.
@@ -35,7 +34,9 @@ enum MockMimeType {
     }
     var type = content.split('/')[0];
     var subType = content.split('/')[1];
-    return values.where((e) => e.type == type && e.subType == subType).firstOrNull;
+    return values
+        .where((e) => e.type == type && e.subType == subType)
+        .firstOrNull;
   }
 
   /// Finds a `MimeType` by its `subType` value.
@@ -44,7 +45,6 @@ enum MockMimeType {
   static MockMimeType? fromSubtypeOrNull(String subType) {
     return values.where((e) => e.subType == subType).firstOrNull;
   }
-
 
   /// Converts the MIME type to its string representation in the format `type/subType`.
   @override

@@ -15,7 +15,5 @@ class MockHttpClientRequest extends Mock implements HttpClientRequest {
   }
 
   @override
-  Future<void> addStream(Stream<List<int>> stream) async {
-
-  }
+  Future<void> addStream(Stream<List<int>> stream) async {}
 }
