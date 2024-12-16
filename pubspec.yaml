@@ -2,7 +2,7 @@ name: network_media_mock
 description: "A package for mocking online media in Flutter widget and integration tests.
   Ideal for simulating network responses and serving local media assets without relying on live resources."
 version: 1.0.0
-homepage:
+homepage: https://hosseinzi.com
 repository: https://github.com/hosseinzare1/network-media-mock
 
 environment:
