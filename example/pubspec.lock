@@ -339,10 +339,10 @@ packages:
     dependency: "direct main"
     description:
       name: network_media_mock
-      sha256: "04f77236bc791bd8acf6f27412729f7a6d3ee19a34fc4d768d1c7ab2172052bd"
+      sha256: "77e86ffff6e91f4fdeffd553e6754624b9eb3529c3c0a1187e2ed79dfdd5737a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "1.1.0"
   octo_image:
     dependency: transitive
     description:

@@ -30,7 +30,7 @@ To use **Network Media Mock**, follow these steps:
 Add the package to your `pubspec.yaml` file:
 ```yaml
 dependencies:
-    network_media_mock: ^1.0.0
+  network_media_mock: <latest-version>
 ```
 Run the following command to install the package:
 
