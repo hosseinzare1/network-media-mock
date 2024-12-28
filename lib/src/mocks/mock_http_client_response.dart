@@ -109,6 +109,10 @@ class MockHttpClientResponse extends Mock implements HttpClientResponse {
 
   @override
   List<RedirectInfo> get redirects => <RedirectInfo>[];
+
+  @override
+  HttpClientResponseCompressionState get compressionState =>
+      HttpClientResponseCompressionState.notCompressed;
 }
 
 /// A mock implementation of [HttpHeaders], used internally to represent HTTP headers

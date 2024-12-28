@@ -128,8 +128,16 @@ class MockHttpClient implements HttpClient {
   }
 
   @override
-  Future<HttpClientRequest> getUrl(Uri url) {
-    return _mainClient.getUrl(url);
+  Future<HttpClientRequest> getUrl(Uri url) async {
+    var response = await _responseGenerator.generateResponse(url.toString());
+
+    if (response != null) {
+      var request = MockHttpClientRequest(response);
+
+      return request;
+    } else {
+      return _mainClient.getUrl(url);
+    }
   }
 
   @override

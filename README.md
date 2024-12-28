@@ -67,13 +67,13 @@ void main() {
       responseDelay: Duration(milliseconds: 500), // Add a delay to simulate network latency
       urlToTypeMappers: [
         // Map URLs matching a regex to a specific MIME type
-        UrlToTypeMapping(RegExp(r'https://example.com/api/images/.*'), MimeType.imageJpeg),
-        UrlToTypeMapping(RegExp(r'https://example.com/api/docs/.*'), MimeType.applicationPdf),
+        UrlToTypeMapping(RegExp(r'https://example.com/api/images/.*'), MockMimeType.imageJpeg),
+        UrlToTypeMapping(RegExp(r'https://example.com/api/docs/.*'), MockMimeType.applicationPdf),
       ],
       typeToAssetMappers: [
         // Map MIME types to custom assets
-        MimeTypeToAssetMapping(MimeType.imageJpeg, "assets/custom_image.jpg"),
-        MimeTypeToAssetMapping(MimeType.applicationPdf, "assets/custom_doc.pdf"),
+        MimeTypeToAssetMapping(MockMimeType.imageJpeg, "assets/custom_image.jpg"),
+        MimeTypeToAssetMapping(MockMimeType.applicationPdf, "assets/custom_doc.pdf"),
       ],
     ),
   );
