@@ -11,13 +11,23 @@ class MockHttpClientResponse extends Mock implements HttpClientResponse {
   /// The MIME type of the response content.
   final String contentType;
 
+  /// The simulated delay for delivering the response.
+  ///
+  /// This delay is distributed across chunks when streaming the response body.
+  final Duration responseDelay;
+
+  /// The size of each chunk of data delivered during the response streaming.
+  final int chunkSize = 256;
+
   /// Creates an instance of [MockHttpClientResponse] with the specified content.
   ///
   /// [fileBytes]: The raw content bytes to include in the response.
   /// [contentType]: The MIME type of the response content.
+  /// [responseDelay]: The simulated delay for delivering the response.
   MockHttpClientResponse({
     required this.fileBytes,
     required this.contentType,
+    required this.responseDelay,
   });
 
   /// Always returns [HttpStatus.ok] (200) to indicate a successful response.
@@ -48,10 +58,24 @@ class MockHttpClientResponse extends Mock implements HttpClientResponse {
     bool? cancelOnError,
   }) {
     final controller = StreamController<List<int>>();
-    if (onData != null) {
-      controller.add(fileBytes);
-    }
-    controller.close();
+
+    final chunkCount = (fileBytes.length / chunkSize).ceil();
+    final chunkDelayMilliseconds =
+        ((responseDelay.inMilliseconds) / chunkCount).ceil();
+    final chunkDelay = Duration(milliseconds: chunkDelayMilliseconds);
+
+    Future(() async {
+      for (int i = 0; i < fileBytes.length; i += chunkSize) {
+        final chunk = fileBytes.sublist(
+            i,
+            i + chunkSize > fileBytes.length
+                ? fileBytes.length
+                : i + chunkSize);
+        controller.add(chunk);
+        await Future.delayed(chunkDelay);
+      }
+      controller.close();
+    });
 
     return controller.stream.listen(
       onData,

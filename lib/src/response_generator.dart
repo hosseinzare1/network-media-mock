@@ -24,11 +24,11 @@ class ResponseGenerator {
   final NetworkMediaMockOptions options;
 
   /// Logger instance for logging activities.
-  final NetworkMediaMockLogger logger;
+  final NetworkMediaMockLogger _logger;
 
   /// Creates a `ResponseGenerator` with the specified options.
   ResponseGenerator({required this.options})
-      : logger = NetworkMediaMockLogger(
+      : _logger = NetworkMediaMockLogger(
           isLogEnabled: options.isLogEnabled,
         );
 
@@ -66,7 +66,7 @@ class ResponseGenerator {
       var fileAssetPath = assetPaths.firstOrNull;
 
       if (fileAssetPath == null) {
-        logger.printError(
+        _logger.printError(
             "Url type recognized as '$type' but no asset found for url: $url");
         return null;
       }
@@ -74,13 +74,17 @@ class ResponseGenerator {
       final fileBytes =
           (await rootBundle.load(fileAssetPath)).buffer.asUint8List();
 
+      _logger.printSuccess(
+          "Media successfully mocked for: ${url.toString()} with size ${fileBytes.length}");
+
       return MockHttpClientResponse(
         fileBytes: fileBytes,
         contentType: type.toString(),
+        responseDelay: options.responseDelay,
       );
     }
 
-    logger.printError("No type recognized for url: $url");
+    _logger.printError("No type recognized for url: $url");
     return null;
   }
 

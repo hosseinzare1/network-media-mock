@@ -11,13 +11,13 @@ class NetworkMediaMockLogger {
 
   void printSuccess(String message) {
     if (isLogEnabled) {
-      if (kDebugMode) print(message);
+      if (kDebugMode) debugPrint(message);
     }
   }
 
   void printError(String message) {
     if (isLogEnabled) {
-      if (kDebugMode) print(message);
+      if (kDebugMode) debugPrint(message);
     }
   }
 }

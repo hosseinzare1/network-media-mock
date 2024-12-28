@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:network_media_mock/src/network_media_mock_logger.dart';
 import 'package:network_media_mock/src/network_media_mock_options.dart';
 import 'package:network_media_mock/src/response_generator.dart';
 
@@ -20,22 +19,18 @@ import 'mock_http_client_request.dart';
 /// - Fallbacks to the original HTTP request if no mock is found.
 ///
 /// ### Parameters:
-/// - `_mainClient`: The original `HttpClient` instance to handle unmocked requests.
+/// - `_mainClient`: The original `HttpClient` instance to handle requests if no mock is found.
 /// - `_options`: Configuration options defining mock behavior.
-/// - `_logger`: Handles logging for debugging purposes.
 class MockHttpClient implements HttpClient {
   final HttpClient _mainClient;
-  final NetworkMediaMockOptions _options;
-  final NetworkMediaMockLogger _logger;
 
-  MockHttpClient(this._mainClient, this._options)
+  MockHttpClient(this._mainClient, NetworkMediaMockOptions _options)
       : autoUncompress = _mainClient.autoUncompress,
         idleTimeout = _mainClient.idleTimeout,
         connectionTimeout = _mainClient.connectionTimeout,
         maxConnectionsPerHost = _mainClient.maxConnectionsPerHost,
         userAgent = _mainClient.userAgent,
-        _responseGenerator = ResponseGenerator(options: _options),
-        _logger = NetworkMediaMockLogger(isLogEnabled: _options.isLogEnabled);
+        _responseGenerator = ResponseGenerator(options: _options);
 
   final ResponseGenerator _responseGenerator;
 
@@ -44,9 +39,6 @@ class MockHttpClient implements HttpClient {
     var response = await _responseGenerator.generateResponse(url.toString());
 
     if (response != null) {
-      _logger.printSuccess("Media successfully mocked for: ${url.toString()}");
-      await Future.delayed(_options.responseDelay);
-
       var request = MockHttpClientRequest(response);
 
       return request;
