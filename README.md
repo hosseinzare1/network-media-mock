@@ -48,8 +48,28 @@ The simplest way to use Network Media Mock is by enabling it with the default op
 import 'package:network_media_mock/network_media_mock.dart';
 
 void main() {
-  HttpOverrides.global = MockHttpOverrides(); // Use default options
-  runApp(MyApp());
+  setUpAll(() {
+    TestWidgetsFlutterBinding.ensureInitialized();
+
+    // Initialize the package before any of test cases
+    HttpOverrides.global = MockHttpOverrides(); // Use default options
+  },
+  );
+
+  testWidgets(
+    'Test Image.network with file extension',
+            (WidgetTester tester) async {
+      await tester.pumpWidget(
+        Image.network(
+          //In this case,The format of the file being returned will be determined from the extension.
+          //(.jpg in this example)
+          'https://anydomain.com/files/18813d1a.jpg',
+        ),
+      );
+
+      // Your test logic goes here
+    },
+  );
 }
 ```
 
@@ -61,23 +81,76 @@ For more control, you can provide custom options such as URL-to-type mappings, M
 import 'package:network_media_mock/network_media_mock.dart';
 
 void main() {
-  HttpOverrides.global = MockHttpOverrides(
-    options: NetworkMediaMockOptions(
-      isLogEnabled: true, // Enable logging
-      responseDelay: Duration(milliseconds: 500), // Add a delay to simulate network latency
-      urlToTypeMappers: [
-        // Map URLs matching a regex to a specific MIME type
-        UrlToTypeMapping(RegExp(r'https://example.com/api/images/.*'), MockMimeType.imageJpeg),
-        UrlToTypeMapping(RegExp(r'https://example.com/api/docs/.*'), MockMimeType.applicationPdf),
-      ],
-      typeToAssetMappers: [
-        // Map MIME types to custom assets
-        MimeTypeToAssetMapping(MockMimeType.imageJpeg, "assets/custom_image.jpg"),
-        MimeTypeToAssetMapping(MockMimeType.applicationPdf, "assets/custom_doc.pdf"),
-      ],
-    ),
+  setUpAll(() {
+    TestWidgetsFlutterBinding.ensureInitialized();
+
+    // Initialize the package before any of test cases
+    HttpOverrides.global = MockHttpOverrides(
+      options: NetworkMediaMockOptions(
+        isLogEnabled: true, // Enable logging
+        responseDelay: const Duration(seconds: 2), // Add a delay to simulate network latency
+        urlToTypeMappers: [
+          // Map URLs matching a regex to a specific MIME type
+          UrlToTypeMapping(
+            RegExp(r'https://example.com/api/files/.*'),
+            MockMimeType.imageSvgXml,
+          ),
+          UrlToTypeMapping(
+            RegExp(r'https://via.placeholder.com/600/.*'),
+            MockMimeType.imagePng,
+          ),
+        ],
+        typeToAssetMappers: [
+          // Map MIME types to custom assets
+          MimeTypeToAssetMapping(MockMimeType.imageJpeg, "assets/custom_image.jpg"),
+          MimeTypeToAssetMapping(MockMimeType.applicationPdf, "assets/custom_doc.pdf"),
+        ],
+      ),
+    );
+  },
   );
-  runApp(MyApp());
+
+  testWidgets(
+    'Test Image.network',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        Image.network(
+          //In this case,The format of the file being returned will be determined from the extension.
+          //(.jpg in this example)
+          'https://anydomain.com/files/18813d1a.jpg',
+        ),
+      );
+
+      // Your test logic goes here
+    },
+  );
+
+  testWidgets(
+    'Test SvgPicture.network',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        SvgPicture.network(
+          // This file type will be detected by the UrlToTypeMapping(*) defined in options.
+          'https://example.com/api/files/18813d1a',
+        ),
+      );
+
+      // Your test logic goes here
+    },
+  );
+
+  testWidgets(
+    'Test CachedNetworkImage',
+            (WidgetTester tester) async {
+      await tester.pumpWidget(
+        CachedNetworkImage(
+          imageUrl: 'https://via.placeholder.com/600/771796',
+        ),
+      );
+
+      // Your test logic goes here
+    },
+  );
 }
 ```
 

@@ -33,7 +33,7 @@ void main() {
   );
 
   testWidgets(
-    'Test  Image.network',
+    'Test Image.network',
         (WidgetTester tester) async {
       await tester.pumpWidget(
         Image.network(
